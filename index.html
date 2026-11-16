@@ -1,0 +1,226 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Nose Detective</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    [hidden] {
+      display: none !important;
+    }
+
+    body {
+      margin: 0;
+      background: #f7f4ed;
+      color: #26394a;
+      font: 1.1rem/1.5 "Trebuchet MS", system-ui, sans-serif;
+    }
+
+    main {
+      width: min(100%, 36rem);
+      margin: 0 auto;
+      padding: 1.5rem 1rem;
+    }
+
+    h1 {
+      margin: 0 0 1rem;
+      font-size: clamp(2rem, 6vw, 3rem);
+      line-height: 1.1;
+    }
+
+    button {
+      min-height: 44px;
+      padding: 0.65rem 1rem;
+      border: 2px solid #345d62;
+      border-radius: 0.9rem;
+      background: white;
+      color: #26394a;
+      font: inherit;
+      cursor: pointer;
+    }
+
+    button:focus-visible {
+      outline: 3px solid #ffbf47;
+      outline-offset: 2px;
+    }
+
+    #camera-toggle,
+    #share-result {
+      background: #28565a;
+      color: white;
+    }
+
+    #camera-status:empty,
+    #caregiver-message:empty,
+    #share-status:empty {
+      display: none;
+    }
+
+    /* The video sets the stage size. The dot and emoji panel float over it. */
+    #camera-stage {
+      position: relative;
+      overflow: hidden;
+      border-radius: 1rem;
+    }
+
+    #camera-preview {
+      display: block;
+      width: 100%;
+      height: auto;
+      transform: scaleX(-1);
+    }
+
+    #nose-dot {
+      position: absolute;
+      z-index: 1;
+      width: 44px;
+      height: 44px;
+      padding: 0;
+      transform: translate(-50%, -50%);
+      border: 3px solid white;
+      border-radius: 50%;
+      background: rgb(8 126 131 / 65%);
+      color: white;
+    }
+
+    #nose-choices {
+      position: absolute;
+      z-index: 2;
+      width: max-content;
+      max-width: 100%;
+      padding: 0.25rem;
+      background: transparent;
+      text-align: center;
+    }
+
+    #round-question {
+      margin: 0 0 0.2rem;
+      color: white;
+      font-weight: bold;
+      text-shadow: 0 1px 3px black, 0 0 5px black;
+    }
+
+    #round-options {
+      display: flex;
+      justify-content: center;
+      gap: 0.25rem;
+    }
+
+    #round-options button {
+      display: grid;
+      place-items: center;
+      width: 3.4rem;
+      height: 3.4rem;
+      padding: 0;
+      border-color: transparent;
+      background: transparent;
+      font-size: 1.8rem;
+    }
+
+    #round-options button:hover,
+    #round-options button:focus-visible {
+      background: rgb(0 0 0 / 25%);
+    }
+
+    .symptom-icon {
+      position: relative;
+      line-height: 1;
+      filter: drop-shadow(0 1px 2px rgb(0 0 0 / 50%));
+    }
+
+    .symptom-detail {
+      position: absolute;
+      right: -0.45rem;
+      bottom: -0.25rem;
+      font-size: 1rem;
+    }
+
+    .dripping {
+      animation: drip-down 1.4s ease-in infinite;
+    }
+
+    .scratching {
+      animation: scratch 0.45s ease-in-out infinite alternate;
+    }
+
+    .flowing {
+      animation: puff 1.3s ease-out infinite;
+    }
+
+    @keyframes drip-down {
+      from { transform: translateY(-3px); opacity: 1; }
+      to   { transform: translateY(5px); opacity: 0.25; }
+    }
+
+    @keyframes scratch {
+      from { transform: translate(-2px, -2px) rotate(-12deg); }
+      to   { transform: translate(1px, 1px) rotate(8deg); }
+    }
+
+    @keyframes puff {
+      from { transform: translateX(0); opacity: 1; }
+      to   { transform: translateX(5px); opacity: 0.25; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .symptom-detail {
+        animation: none;
+      }
+    }
+
+    #camera-stage:has(#camera-preview[hidden]) #nose-dot,
+    #camera-stage:has(#camera-preview[hidden]) #nose-choices {
+      display: none;
+    }
+
+    #caregiver-message {
+      padding: 1rem;
+      border-left: 4px solid #438681;
+      border-radius: 0.5rem;
+      background: white;
+      white-space: pre-line;
+    }
+  </style>
+</head>
+
+<body>
+  <main>
+    <h1>🔎 Nose Detective</h1>
+
+    <section aria-label="Camera check-in">
+      <button id="camera-toggle" type="button">📷 Say hi</button>
+      <p id="camera-status" role="status"></p>
+
+      <div id="camera-stage">
+        <video id="camera-preview" autoplay muted playsinline hidden></video>
+
+        <button
+          id="nose-dot"
+          type="button"
+          aria-label="Choose how my nose feels"
+          hidden
+        >●</button>
+
+        <div id="nose-choices" hidden>
+          <p id="round-question" aria-live="polite"></p>
+          <div id="round-options" role="group" aria-labelledby="round-question"></div>
+        </div>
+      </div>
+    </section>
+
+    <section aria-label="Caregiver result">
+      <p id="caregiver-message" role="status"></p>
+      <button id="share-result" type="button" hidden>Share with caregiver</button>
+      <p id="share-status" role="status"></p>
+    </section>
+  </main>
+
+  <script src="teddy.js"></script>
+  <script type="module" src="nose.js"></script>
+</body>
+</html>

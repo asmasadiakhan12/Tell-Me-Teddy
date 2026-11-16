@@ -1,0 +1,164 @@
+[
+  {
+    "runny": "Yes",
+    "stuffy": "Yes",
+    "itchy": "Yes",
+    "result": "My nose feels runny, stuffy, and itchy."
+  },
+  {
+    "runny": "Yes",
+    "stuffy": "Yes",
+    "itchy": "No",
+    "result": "My nose feels runny and stuffy. My nose isn\u2019t itchy."
+  },
+  {
+    "runny": "Yes",
+    "stuffy": "Yes",
+    "itchy": "Unsure",
+    "result": "My nose feels runny and stuffy. I\u2019m not sure if my nose feels itchy."
+  },
+  {
+    "runny": "Yes",
+    "stuffy": "No",
+    "itchy": "Yes",
+    "result": "My nose feels runny and itchy. My nose isn\u2019t stuffy."
+  },
+  {
+    "runny": "Yes",
+    "stuffy": "No",
+    "itchy": "No",
+    "result": "My nose feels runny. My nose isn\u2019t stuffy or itchy."
+  },
+  {
+    "runny": "Yes",
+    "stuffy": "No",
+    "itchy": "Unsure",
+    "result": "My nose feels runny. My nose isn\u2019t stuffy. I\u2019m not sure if my nose feels itchy."
+  },
+  {
+    "runny": "Yes",
+    "stuffy": "Unsure",
+    "itchy": "Yes",
+    "result": "My nose feels runny and itchy. I\u2019m not sure if my nose feels stuffy."
+  },
+  {
+    "runny": "Yes",
+    "stuffy": "Unsure",
+    "itchy": "No",
+    "result": "My nose feels runny. My nose isn\u2019t itchy. I\u2019m not sure if my nose feels stuffy."
+  },
+  {
+    "runny": "Yes",
+    "stuffy": "Unsure",
+    "itchy": "Unsure",
+    "result": "My nose feels runny. I\u2019m not sure if my nose feels stuffy or itchy."
+  },
+  {
+    "runny": "No",
+    "stuffy": "Yes",
+    "itchy": "Yes",
+    "result": "My nose feels stuffy and itchy. My nose isn\u2019t runny."
+  },
+  {
+    "runny": "No",
+    "stuffy": "Yes",
+    "itchy": "No",
+    "result": "My nose feels stuffy. My nose isn\u2019t runny or itchy."
+  },
+  {
+    "runny": "No",
+    "stuffy": "Yes",
+    "itchy": "Unsure",
+    "result": "My nose feels stuffy. My nose isn\u2019t runny. I\u2019m not sure if my nose feels itchy."
+  },
+  {
+    "runny": "No",
+    "stuffy": "No",
+    "itchy": "Yes",
+    "result": "My nose feels itchy. My nose isn\u2019t runny or stuffy."
+  },
+  {
+    "runny": "No",
+    "stuffy": "No",
+    "itchy": "No",
+    "result": "My nose isn\u2019t runny, stuffy, or itchy."
+  },
+  {
+    "runny": "No",
+    "stuffy": "No",
+    "itchy": "Unsure",
+    "result": "My nose isn\u2019t runny or stuffy. I\u2019m not sure if my nose feels itchy."
+  },
+  {
+    "runny": "No",
+    "stuffy": "Unsure",
+    "itchy": "Yes",
+    "result": "My nose feels itchy. My nose isn\u2019t runny. I\u2019m not sure if my nose feels stuffy."
+  },
+  {
+    "runny": "No",
+    "stuffy": "Unsure",
+    "itchy": "No",
+    "result": "My nose isn\u2019t runny or itchy. I\u2019m not sure if my nose feels stuffy."
+  },
+  {
+    "runny": "No",
+    "stuffy": "Unsure",
+    "itchy": "Unsure",
+    "result": "My nose isn\u2019t runny. I\u2019m not sure if my nose feels stuffy or itchy."
+  },
+  {
+    "runny": "Unsure",
+    "stuffy": "Yes",
+    "itchy": "Yes",
+    "result": "My nose feels stuffy and itchy. I\u2019m not sure if my nose feels runny."
+  },
+  {
+    "runny": "Unsure",
+    "stuffy": "Yes",
+    "itchy": "No",
+    "result": "My nose feels stuffy. My nose isn\u2019t itchy. I\u2019m not sure if my nose feels runny."
+  },
+  {
+    "runny": "Unsure",
+    "stuffy": "Yes",
+    "itchy": "Unsure",
+    "result": "My nose feels stuffy. I\u2019m not sure if my nose feels runny or itchy."
+  },
+  {
+    "runny": "Unsure",
+    "stuffy": "No",
+    "itchy": "Yes",
+    "result": "My nose feels itchy. My nose isn\u2019t stuffy. I\u2019m not sure if my nose feels runny."
+  },
+  {
+    "runny": "Unsure",
+    "stuffy": "No",
+    "itchy": "No",
+    "result": "My nose isn\u2019t stuffy or itchy. I\u2019m not sure if my nose feels runny."
+  },
+  {
+    "runny": "Unsure",
+    "stuffy": "No",
+    "itchy": "Unsure",
+    "result": "My nose isn\u2019t stuffy. I\u2019m not sure if my nose feels runny or itchy."
+  },
+  {
+    "runny": "Unsure",
+    "stuffy": "Unsure",
+    "itchy": "Yes",
+    "result": "My nose feels itchy. I\u2019m not sure if my nose feels runny or stuffy."
+  },
+  {
+    "runny": "Unsure",
+    "stuffy": "Unsure",
+    "itchy": "No",
+    "result": "My nose isn\u2019t itchy. I\u2019m not sure if my nose feels runny or stuffy."
+  },
+  {
+    "runny": "Unsure",
+    "stuffy": "Unsure",
+    "itchy": "Unsure",
+    "result": "I\u2019m not sure if my nose feels runny, stuffy, or itchy."
+  }
+]
