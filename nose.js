@@ -37,8 +37,7 @@ const unsurePicture = { face: "🤷", label: "I’m not sure" };
 
 let answers = [];
 let caregiverText = "";
-let combinations;
-
+let noseModel;
 let trackerPromise;
 let animationFrame;
 let previousFrame = -1;
@@ -192,56 +191,75 @@ dot.addEventListener("click", () => {
   message.textContent = "";
   shareStatus.textContent = "";
   shareButton.hidden = true;
+  emailForm.hidden = true;
   showRound();
 });
 
 async function finishRound(picks) {
-  const lines = rounds.map((round, index) => `${round.name}: ${picks[index]}`);
-  caregiverText = ["Child’s nose check-in", ...lines].join("\n");
+  const [runny, stuffy, itchy] = picks;
+  const answers = { runny, stuffy, itchy };
 
-  try {
-    if (!combinations) {
-      const response = await fetch("./data/nose_combinations.json");
-      if (!response.ok) throw new Error("Dataset unavailable");
-      const data = await response.json();
-      if (!Array.isArray(data)) throw new Error("Invalid dataset");
-      combinations = data;
+  const checkIn = rounds
+    .map((round, index) => `${round.name}: ${picks[index]}`)
+    .join(" · ");
+
+  let prediction = "Too little information to suggest a fictional match.";
+
+  // Demo rule: require a reported symptom and at least two definite answers.
+  const definiteCount = picks.filter(answer => answer !== "Unsure").length;
+
+  if (picks.includes("Yes") && definiteCount >= 2) {
+    try {
+      if (!noseModel) {
+        const response = await fetch("./data/nose_model.json");
+        if (!response.ok) throw new Error("Model unavailable");
+        noseModel = await response.json();
+      }
+
+      const scores = Object.entries(noseModel.classes).map(([cause, learned]) => {
+        let score = learned.prior;
+
+        for (const symptom of noseModel.symptoms) {
+          const answer = answers[symptom];
+          if (answer !== "Unsure") {
+            score *= learned.likelihoods[symptom][answer];
+          }
+        }
+
+        return { cause, score };
+      });
+
+      scores.sort((a, b) => b.score - a.score);
+      const [first, second] = scores;
+
+      // Demo display rule: show a label only with a 2-to-1 lead.
+      if (first.score >= 2 * second.score) {
+        const label = first.cause.replaceAll("_", " ");
+        prediction = `The answers more closely match the fictional ${label} cases.`;
+      } else {
+        prediction = "The fictional cold and allergy cases are too close to distinguish.";
+      }
+    } catch {
+      prediction = "The model could not be loaded. Your answers are shown above.";
     }
-
-    const [runny, stuffy, itchy] = picks;
-    const match = combinations.find(row =>
-      row.runny === runny && row.stuffy === stuffy && row.itchy === itchy
-    );
-
-    if (match?.result) {
-     caregiverText = `Child’s nose check-in\n${match.result}`;    } else {
-      shareStatus.textContent = "Showing the answers. This combination has no summary yet.";
-    }
-  } catch {
-    shareStatus.textContent = "Showing the answers. The dataset could not be loaded.";
   }
 
+  caregiverText = `Child’s nose check-in\n${checkIn}\n\nFictional case prediction\n${prediction}`;
   message.style.whiteSpace = "pre-line";
   message.textContent = caregiverText;
   shareButton.hidden = false;
+  emailForm.hidden = false;
 }
+const emailForm = document.querySelector("#caregiver-email-form");
+const emailInput = document.querySelector("#caregiver-email");
 
-shareButton.addEventListener("click", async () => {
+emailForm.addEventListener("submit", event => {
+  event.preventDefault();
   if (!caregiverText) return;
 
-  try {
-    if (navigator.share) {
-      await navigator.share({
-        title: "Nose check-in",
-        text: caregiverText
-      });
-    } else {
-      await navigator.clipboard.writeText(caregiverText);
-      shareStatus.textContent = "Copied. Paste the result into a message to your caregiver.";
-    }
-  } catch (error) {
-    if (error.name !== "AbortError") {
-      shareStatus.textContent = "You can select and copy the result above.";
-    }
-  }
+  const recipient = encodeURIComponent(emailInput.value.trim());
+  const subject = encodeURIComponent("Child’s nose check-in");
+  const body = encodeURIComponent(caregiverText);
+
+  window.location.href = `mailto:${recipient}?subject=${subject}&body=${body}`;
 });
